@@ -35,7 +35,6 @@ const UserPage = () => {
                         
                             <tbody>
                                 {userStore.userList.map((user, index) =>
-
                                     <tr key={index}>
                                         <td>{user.firstName}</td>
                                         <td>{user.lastName}</td>
@@ -44,7 +43,8 @@ const UserPage = () => {
                                         <td>{user.status ? 'Active' : 'Non active'}</td>
                                         <td>
                                             <button onClick={() => userStore.goToEditCreatePage(user.id)}>Edit</button>
-                                            <button onClick={() => userStore.confirmDeleteUser(user.id)} >Delete</button>
+                                            <button onClick={() => userStore.confirmDeleteUser(user.id)}>Delete</button>
+                                            <button onClick={() => userStore.goToUserPermissionsPage(user.id)}>Assing</button>
                                         </td>
                                     </tr>
                                 )}

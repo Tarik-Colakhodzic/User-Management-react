@@ -62,7 +62,7 @@ class UserStore {
     }
 
     async deleteUserAsync(id) {
-        var response = await this.userService.deleteAsync(id)
+        await this.userService.deleteAsync(id)
         this.getUsersAsync();
     }
 
@@ -117,6 +117,10 @@ class UserStore {
 
     goToEditCreatePage(id) {
         window.location.href = '/editcreate/' + id;
+    }
+
+    goToUserPermissionsPage(id) {
+        window.location.href = '/userpermissions/' + id
     }
 }
 
