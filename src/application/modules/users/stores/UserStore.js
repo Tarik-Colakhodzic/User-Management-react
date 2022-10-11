@@ -63,7 +63,7 @@ class UserStore {
 
     async deleteUserAsync(id) {
         var response = await this.userService.deleteAsync(id)
-        console.log(response);
+        this.getUsersAsync();
     }
 
     async getUserByIdAsync(id) {
@@ -96,6 +96,9 @@ class UserStore {
             this.userLastName.current.value = '';
             this.userEmail.current.value = '';
             this.userPassword.current.value = '';
+            if(this.userUsername.current) { 
+                this.userUsername.current.value = '';
+            }
             this.status = true;
         }
     }
