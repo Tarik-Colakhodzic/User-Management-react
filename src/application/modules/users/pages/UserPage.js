@@ -44,7 +44,7 @@ const UserPage = () => {
                                         <td>{user.status ? 'Active' : 'Non active'}</td>
                                         <td>
                                             <button onClick={() => userStore.goToEditCreatePage(user.id)}>Edit</button>
-                                            <button onClick={() => userStore.deleteUserAsync(user.id)} >Delete</button>
+                                            <button onClick={() => userStore.confirmDeleteUser(user.id)} >Delete</button>
                                         </td>
                                     </tr>
                                 )}
