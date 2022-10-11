@@ -43,7 +43,7 @@ const UserPage = () => {
                                         <td>{user.email}</td>
                                         <td>{user.status ? 'Active' : 'Non active'}</td>
                                         <td>
-                                            <button>Edit</button>
+                                            <button onClick={() => userStore.goToEditCreatePage(user.id)}>Edit</button>
                                             <button onClick={() => userStore.deleteUserAsync(user.id)} >Delete</button>
                                         </td>
                                     </tr>
@@ -51,7 +51,7 @@ const UserPage = () => {
                             </tbody>
                     </table>
                 }
-                <button>Create new user</button>
+                <button onClick={() => userStore.goToEditCreatePage()} >Create new user</button>
             </div>
         </div>
     )

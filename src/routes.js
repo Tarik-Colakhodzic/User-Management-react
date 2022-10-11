@@ -15,7 +15,7 @@ function Routes() {
                     component={UserPage} 
                 />
                 <Route
-                    path="/editcreate"
+                    path="/editcreate/:id"
                     component={EditCreateUserPage}
                 />
                 <Redirect to="/" />

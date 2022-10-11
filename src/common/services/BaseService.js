@@ -15,13 +15,14 @@ class BaseService {
         return await axios.get(this.apiUrl + "/" + id);
     };
 
-    // async postAsync(params) {
-    //     return await axios.post(this.apiURL, { params });
-    // };
+    async postAsync(params) {
+        return await axios.post(this.apiUrl, params);
+    };
 
-    // async putAsync(id, params) {
-    //     return await axios.put(this.apiURL, id, { params });
-    // };
+    async putAsync(id, params) {
+        console.log(id, params);
+        return await axios.put(this.apiUrl + "/" + id, params);
+    };
 
     async deleteAsync(id) {
         return await axios.delete(this.apiUrl + "/" + id);
