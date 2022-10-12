@@ -22,8 +22,9 @@ const UserPermissionsPage = () => {
                     <label>{permission.code}</label>
                     <br></br>
                     <label>{permission.description}</label>
-                    <hr></hr>
+                    <br></br>
                     <Switch onChange={() => userPermissionsStore.changePermission(permission.id)} checked={userPermissionsStore.userPermissionsIds.some(x => x === permission.id)}></Switch>
+                    <hr></hr>
                 </div> 
             )}
         </div>

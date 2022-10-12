@@ -10,6 +10,9 @@ class UserStore {
     username = React.createRef('');
     email = React.createRef('');
     status = true;
+    totalCount = 0;
+    pageNumber = 1;
+    pageSize = 10;
 
     userFirstName = React.createRef('');
     userLastName = React.createRef('');
@@ -30,10 +33,13 @@ class UserStore {
                 lastName: this.lastName.current ? this.lastName.current.value : '',
                 username: this.username.current ? this.username.current.value : '',
                 email: this.email.current ? this.email.current.value : '',
-                status: this.status
+                status: this.status,
+                pageNumber: this.pageNumber,
+                pageSize: this.pageSize
             });
         runInAction(() => {
             this.userList = response.data.items;
+            this.totalCount = 15;
         })
     }
 
@@ -76,7 +82,6 @@ class UserStore {
     }
 
     async saveUser(id, isCreate) {
-        var response = null;
         var model = {
             firstName: this.userFirstName.current.value,
             lastName: this.userLastName.current.value,
@@ -85,22 +90,20 @@ class UserStore {
         }
 
         if (isCreate) {
-            response = await this.userService.postAsync(Object.assign(model, { username: this.userUsername.current.value, password: this.userPassword.current.value }));
+            await this.userService.postAsync(Object.assign(model, { username: this.userUsername.current.value, password: this.userPassword.current.value }));
         } else {
-            response = await this.userService.putAsync(id, model)
+            await this.userService.putAsync(id, model)
         }
 
-        if (response.status === 200) {
-            alert("Operation is successfully completed");
-            this.userFirstName.current.value = '';
-            this.userLastName.current.value = '';
-            this.userEmail.current.value = '';
-            this.userPassword.current.value = '';
-            if(this.userUsername.current) { 
-                this.userUsername.current.value = '';
-            }
-            this.status = true;
+        alert("Operation is successfully completed");
+        this.userFirstName.current.value = '';
+        this.userLastName.current.value = '';
+        this.userEmail.current.value = '';
+        this.userPassword.current.value = '';
+        if (this.userUsername.current) {
+            this.userUsername.current.value = '';
         }
+        this.status = true;
     }
 
     changeStatus() {
@@ -121,6 +124,16 @@ class UserStore {
 
     goToUserPermissionsPage(id) {
         window.location.href = '/userpermissions/' + id
+    }
+
+    async handlePageChange(page) {
+        this.pageNumber = page
+        await this.getUsersAsync();
+    }
+
+    async handlePerRowsChange(pageSize) {
+        this.pageSize = pageSize;
+        await this.getUsersAsync();
     }
 }
 

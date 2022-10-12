@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useStore } from "../../../../stores";
 import { observer } from "mobx-react";
 import Switch from "react-switch";
+import DataTable from "react-data-table-component";
 
 const UserPage = () => {
     const { userStore } = useStore();
@@ -10,6 +11,45 @@ const UserPage = () => {
         userStore.getUsersAsync();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
+
+    const columns = [
+        {
+            key: 'FirstName',
+            name: 'First name',
+            selector: row => row.firstName
+        },
+        {
+            key: 'LastName',
+            name: 'Last name',
+            selector: row => row.lastName
+        },
+        {
+            key: 'Username',
+            name: 'Username',
+            selector: row => row.username
+        },
+        {
+            key: 'Email',
+            name: 'Email',
+            selector: row => row.email,
+        },
+        {
+            name: 'status',
+            selector: row => row.status ? 'Active' : 'Non active',
+            sortable: false
+        },
+        {
+            name: 'Action',
+            cell: row =>
+            (
+                <div>
+                    <button onClick={() => userStore.goToEditCreatePage(row.id)}>Edit</button>
+                    <button onClick={() => userStore.confirmDeleteUser(row.id)}>Delete</button>
+                    <button onClick={() => userStore.goToUserPermissionsPage(row.id)}>Assing</button>
+                </div>
+            )
+        },
+    ]
 
     return (
         <div>
@@ -21,35 +61,17 @@ const UserPage = () => {
                 <label>Active <Switch onChange={() => userStore.changeStatus()} checked={userStore.status}></Switch> </label>
                 <button onClick={() => userStore.getUsersAsync()} >Search</button>
                 {userStore.noUsers ? 'No users!' :
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>First name</th>
-                                <th>Last name</th>
-                                <th>Username</th>
-                                <th>Email</th>
-                                <th>Status</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        
-                            <tbody>
-                                {userStore.userList.map((user, index) =>
-                                    <tr key={index}>
-                                        <td>{user.firstName}</td>
-                                        <td>{user.lastName}</td>
-                                        <td>{user.username}</td>
-                                        <td>{user.email}</td>
-                                        <td>{user.status ? 'Active' : 'Non active'}</td>
-                                        <td>
-                                            <button onClick={() => userStore.goToEditCreatePage(user.id)}>Edit</button>
-                                            <button onClick={() => userStore.confirmDeleteUser(user.id)}>Delete</button>
-                                            <button onClick={() => userStore.goToUserPermissionsPage(user.id)}>Assing</button>
-                                        </td>
-                                    </tr>
-                                )}
-                            </tbody>
-                    </table>
+                    
+                <DataTable
+                    title="Users"
+                    columns={columns}
+                    data={userStore.userList}
+                    pagination
+                    paginationServer
+                    onChangePage={(page) => userStore.handlePageChange(page)}
+                    onChangeRowsPerPage={(rowsPerPage) => userStore.handlePerRowsChange(rowsPerPage)}
+                    paginationTotalRows={userStore.totalCount}
+                />
                 }
                 <button onClick={() => userStore.goToEditCreatePage()} >Create new user</button>
             </div>
