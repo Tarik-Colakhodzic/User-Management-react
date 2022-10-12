@@ -13,6 +13,8 @@ class UserStore {
     totalCount = 0;
     pageNumber = 1;
     pageSize = 10;
+    sortColumn = '';
+    sortDirection = '';
 
     userFirstName = React.createRef('');
     userLastName = React.createRef('');
@@ -35,7 +37,9 @@ class UserStore {
                 email: this.email.current ? this.email.current.value : '',
                 status: this.status,
                 pageNumber: this.pageNumber,
-                pageSize: this.pageSize
+                pageSize: this.pageSize,
+                sortColumn: this.sortColumn,
+                sortDirection: this.sortDirection
             });
         runInAction(() => {
             this.userList = response.data.items;
@@ -133,6 +137,12 @@ class UserStore {
 
     async handlePerRowsChange(pageSize) {
         this.pageSize = pageSize;
+        await this.getUsersAsync();
+    }
+
+    async handleSort(selectedColumn, sortOrder){
+        this.sortColumn = selectedColumn.key;
+        this.sortDirection = sortOrder;
         await this.getUsersAsync();
     }
 }

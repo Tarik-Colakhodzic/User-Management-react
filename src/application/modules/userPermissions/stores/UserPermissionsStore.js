@@ -26,9 +26,9 @@ class UserPermissionsStore {
     }
 
     async getPermissionsAsync() {
-        var response = await this.permissionService.getAsync()
+        var response = await this.permissionService.getAllAsync()
         runInAction(() => {
-            this.permissions = response.data.items;
+            this.permissions = response.data;
         })
     }
 

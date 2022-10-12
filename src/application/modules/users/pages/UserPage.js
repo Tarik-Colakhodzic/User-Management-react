@@ -16,27 +16,31 @@ const UserPage = () => {
         {
             key: 'FirstName',
             name: 'First name',
-            selector: row => row.firstName
+            selector: row => row.firstName,
+            sortable: true
         },
         {
             key: 'LastName',
             name: 'Last name',
-            selector: row => row.lastName
+            selector: row => row.lastName,
+            sortable: true
         },
         {
             key: 'Username',
             name: 'Username',
-            selector: row => row.username
+            selector: row => row.username,
+            sortable: true
         },
         {
             key: 'Email',
             name: 'Email',
             selector: row => row.email,
+            sortable: true
         },
         {
             name: 'status',
             selector: row => row.status ? 'Active' : 'Non active',
-            sortable: false
+            sortable: true
         },
         {
             name: 'Action',
@@ -68,9 +72,11 @@ const UserPage = () => {
                     data={userStore.userList}
                     pagination
                     paginationServer
+                    sortServer
                     onChangePage={(page) => userStore.handlePageChange(page)}
                     onChangeRowsPerPage={(rowsPerPage) => userStore.handlePerRowsChange(rowsPerPage)}
                     paginationTotalRows={userStore.totalCount}
+                    onSort={(selectedColumn, sortOrder) => userStore.handleSort(selectedColumn, sortOrder)}
                 />
                 }
                 <button onClick={() => userStore.goToEditCreatePage()} >Create new user</button>

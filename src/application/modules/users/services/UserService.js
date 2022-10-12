@@ -17,7 +17,7 @@ class UserService extends BaseService {
     }
 
     async removePermissionAsync(userPermissionId){
-        return await axios.delete(this.apiUrl + this.userPermissionPath + "/" + userPermissionId);
+        return await axios.delete(this.apiUrl + '/' +  this.userPermissionPath + "/" + userPermissionId);
     }
 }
 
